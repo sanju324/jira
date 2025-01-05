@@ -1,5 +1,6 @@
 import { getOrganisation } from "@/actions/organisations";
 import OrgSwitcher from "@/components/org-switcher";
+import ProjectList from "./_components/ProjectList";
 
 const page = async ({ params }) => {
 	const { orgId } = await params;
@@ -18,7 +19,9 @@ const page = async ({ params }) => {
 				{/* org switcher */}
 				<OrgSwitcher />
 			</div>
-			<div classname="mb-4">Show org projects</div>
+			<div classname="mb-4">
+				<ProjectList orgId={organisation.id} />
+			</div>
 			<div classname="mt-8">
 				Show user assigned and reported issues here
 			</div>

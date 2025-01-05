@@ -37,3 +37,115 @@ export async function CreateProject(data) {
 		throw new Error("Failed to create project" + error.message);
 	}
 }
+
+export async function GetProjects(orgId) {
+	const { userId } = auth();
+
+	if (!orgId) {
+		throw new Error("Organization ID is missing");
+	}
+	if (!userId) {
+		throw new Error("User ID is missing");
+	}
+
+	const user = await db.user.findUnique({
+		where: {
+			clerkUserId: userId,
+		},
+	});
+
+	if (!user) {
+		throw new Error("User not found");
+	}
+
+	const projects = await db.project.findMany({
+		where: {
+			organizationId: orgId,
+		},
+		orderBy: {
+			createdAt: "desc",
+		},
+	});
+
+	return projects;
+}
+
+export async function deleteProject(projectId) {
+	const { userId, orgId, orgRole } = auth();
+
+	if (!userId || !orgId) {
+		throw new Error("User ID or Organization ID is missing");
+	}
+
+	if (orgRole !== "org:admin") {
+		throw new Error("User is not an admin of the organization");
+	}
+
+	const project = await db.project.findUnique({
+		where: {
+			id: projectId,
+		},
+	});
+
+	if (!project || project.organizationId !== orgId) {
+		throw new Error(
+			"Project not found Or Project does not belong to the organization"
+		);
+	}
+
+	try {
+		await db.project.delete({
+			where: {
+				id: projectId,
+			},
+		});
+
+		return { success: true };
+	} catch (error) {
+		throw new Error("Failed to delete project" + error.message);
+	}
+}
+
+export async function getProject(projectId) {
+	const { userId, orgId } = auth();
+
+	if (!userId) {
+		throw new Error("User ID is missing");
+	}
+	if (!orgId) {
+		throw new Error("Organization ID is missing");
+	}
+
+	const user = await db.user.findUnique({
+		where: {
+			clerkUserId: userId,
+		},
+	});
+
+	if (!user) {
+		throw new Error("User not found");
+	}
+
+	const project = await db.project.findUnique({
+		where: {
+			id: projectId,
+		},
+		include: {
+			sprints: {
+				orderBy: {
+					createdAt: "desc",
+				},
+			},
+		},
+	});
+
+	if (!project) {
+		return null;
+	}
+
+	if (project.organizationId !== orgId) {
+		return null;
+	}
+
+	return project;
+}
