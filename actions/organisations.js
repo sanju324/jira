@@ -41,3 +41,39 @@ export async function getOrganisation(slug) {
 
 	return organisation;
 }
+
+export async function getOrganisationUsers(orgId) {
+	const { userId } = auth();
+	if (!userId) {
+		return { status: 401, body: { message: "Unauthorized" } };
+	}
+
+	const user = db.user.findUnique({
+		where: {
+			clerkUserId: userId,
+		},
+	});
+
+	if (!user) {
+		return { status: 404, body: { message: "User not found" } };
+	}
+
+	const organisationMemberships =
+		await clerkClient().organizations.getOrganizationMembershipList({
+			organizationId: orgId,
+		});
+
+	const userIds = organisationMemberships.data.map(
+		(m) => m.publicUserData.userId
+	);
+
+	const users = await db.user.findMany({
+		where: {
+			clerkUserId: {
+				in: userIds,
+			},
+		},
+	});
+
+	return users;
+}
