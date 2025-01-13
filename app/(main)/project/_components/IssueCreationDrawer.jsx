@@ -26,6 +26,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import MDEditor from "@uiw/react-md-editor";
+import { toast } from "sonner";
 
 const IssueCreationDrawer = ({
 	isOpen,
@@ -41,6 +43,7 @@ const IssueCreationDrawer = ({
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm({
 		resolver: zodResolver(issueSchema),
 		defaultValues: {
@@ -57,6 +60,15 @@ const IssueCreationDrawer = ({
 		data: newIssue,
 	} = useFetch(createIssue);
 
+	useEffect(() => {
+		if (newIssue) {
+			reset();
+			onClose();
+			onIssueCreated();
+			toast.success("Issue Created Successfully");
+		}
+	}, [newIssue, createIssueLoading]);
+
 	const {
 		loading: usersLoading,
 		data: users,
@@ -69,7 +81,20 @@ const IssueCreationDrawer = ({
 		}
 	}, [isOpen, orgId]);
 
-	const onSubmit = async (data) => {};
+	const onSubmit = async (data) => {
+		await createIssueFn(projectId, { ...data, status, sprintId });
+	};
+
+	useEffect(() => {
+		if (isOpen) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "";
+		}
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [isOpen]);
 
 	return (
 		<Drawer open={isOpen} onClose={onClose}>
@@ -78,7 +103,10 @@ const IssueCreationDrawer = ({
 					<DrawerTitle>Create New Issue</DrawerTitle>
 				</DrawerHeader>
 				{usersLoading && <BarLoader width={"100%"} color="#36d7b7" />}
-				<form className="p-4 space-y-4">
+				<form
+					className="p-4 space-y-4"
+					onSubmit={handleSubmit(onSubmit)}
+				>
 					<div>
 						<label
 							htmlFor="title"
@@ -101,30 +129,28 @@ const IssueCreationDrawer = ({
 							Assignee
 						</label>
 						<Controller
-							name="asigneeId"
+							name="assigneeId"
 							control={control}
-							render={(field) => {
-								return (
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}
-									>
-										<SelectTrigger className="w-[180px]">
-											<SelectValue placeholder="Select assignee" />
-										</SelectTrigger>
-										<SelectContent>
-											{users?.map((user) => (
-												<SelectItem
-													key={user.id}
-													value={user.id}
-												>
-													{user?.name}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								);
-							}}
+							render={({ field }) => (
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select assignee" />
+									</SelectTrigger>
+									<SelectContent>
+										{users?.map((user) => (
+											<SelectItem
+												key={user.id}
+												value={user.id}
+											>
+												{user?.name}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							)}
 						/>
 						{errors.assigneeId && (
 							<p className="text-red-500 text-sm mt-1">
@@ -139,13 +165,62 @@ const IssueCreationDrawer = ({
 						>
 							Description
 						</label>
-						<Input id="title" {...register("title")} />
-						{errors.description && (
-							<p className="text-red-500 text-sm mt-1">
-								{errors.description.message}
-							</p>
-						)}
+
+						<Controller
+							name="description"
+							control={control}
+							render={({ field }) => (
+								<MDEditor
+									value={field.value}
+									onChange={field.onChange}
+								/>
+							)}
+						/>
 					</div>
+					<div>
+						<label
+							htmlFor="priority"
+							className="block text-sm font-medium mb-1"
+						>
+							Priority
+						</label>
+						<Controller
+							name="priority"
+							control={control}
+							render={({ field }) => (
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<SelectTrigger className="w-[180px]">
+										<SelectValue placeholder="Select Priority" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="LOW">LOW</SelectItem>
+										<SelectItem value="MEDIUM">
+											MEDIUM
+										</SelectItem>
+										<SelectItem value="HIGH">
+											HIGH
+										</SelectItem>
+										<SelectItem value="URGENT">
+											URGENT
+										</SelectItem>
+									</SelectContent>
+								</Select>
+							)}
+						/>
+					</div>
+					{error && (
+						<p className="text-red-500 mt-2">{error.message}</p>
+					)}
+					<Button
+						type="submit"
+						disabled={createIssueLoading}
+						className="w-full"
+					>
+						{createIssueLoading ? "Creating..." : "Create Issue"}
+					</Button>
 				</form>
 			</DrawerContent>
 		</Drawer>

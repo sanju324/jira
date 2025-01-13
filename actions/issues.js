@@ -2,7 +2,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
-export async function createIssue({ projectId, data }) {
+export async function createIssue(projectId, data) {
 	const { userId, orgId } = auth();
 	if (!userId || !orgId) {
 		throw new Error("Unauthorized");
@@ -44,4 +44,27 @@ export async function createIssue({ projectId, data }) {
 		},
 	});
 	return issue;
+}
+
+export async function getIssuesForSprint(sprintId) {
+	const { userId, orgId } = auth();
+
+	const issues = await db.issue.findMany({
+		where: {
+			sprintId,
+		},
+		include: {
+			assignee: true,
+			reporter: true,
+		},
+		orderBy: [
+			{
+				order: "asc",
+			},
+			{
+				status: "asc",
+			},
+		],
+	});
+	return issues;
 }
