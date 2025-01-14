@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import IssueCreationDrawer from "./IssueCreationDrawer";
 import useFetch from "@/hooks/use-fetch";
-import { getIssuesForSprint } from "@/actions/issues";
+import { getIssuesForSprint, updateIssuesOrder } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "./IssueCard";
 import { toast } from "sonner";
@@ -55,6 +55,13 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 		fetchIssues(currentSprint.id);
 		setFilteredIssues(issues);
 	};
+
+	const {
+		loading: updatedIssuesLoading,
+		error: updatedIssuesError,
+		fn: updateIssuesOrderFn,
+	} = useFetch(updateIssuesOrder);
+
 	const onDragEnd = async (result) => {
 		if (currentSprint.status === "PLANNED") {
 			toast.warning("Start the sprint to move issues.");
@@ -90,12 +97,23 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 			reorderedCards.forEach((card, index) => {
 				card.order = index;
 			});
+		} else {
+			const [moved] = sourceList.splice(source.index, 1);
+			moved.status = destination.droppableId;
+			destinationList.splice(destination.index, 0, moved);
 
-			const sortedIssues = newOrderedData.sort(
-				(a, b) => a.order - b.order
-			);
-			setIssues(sortedIssues);
+			sourceList.forEach((card, index) => {
+				card.order = index;
+			});
+
+			destinationList.forEach((card, index) => {
+				card.order = index;
+			});
 		}
+		const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
+		setIssues(sortedIssues);
+
+		updateIssuesOrderFn(sortedIssues);
 	};
 
 	if (issuesError) return <div>Error loading issues.</div>;
@@ -109,7 +127,12 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 				projectId={projectId}
 			/>
 
-			{issuesLoading && (
+			{updatedIssuesError && (
+				<p className="text-red-500 mt-2">
+					{updatedIssuesError.message}
+				</p>
+			)}
+			{(updatedIssuesLoading || issuesLoading) && (
 				<BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
 			)}
 
