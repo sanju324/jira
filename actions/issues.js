@@ -91,3 +91,103 @@ export async function updateIssuesOrder(updatedIssues) {
 
 	return { success: true };
 }
+
+export async function deleteIssue(issueId) {
+	const { userId, orgId } = auth();
+	if (!userId || !orgId) {
+		throw new Error("Unauthorized");
+	}
+
+	const user = await db.user.findUnique({
+		where: {
+			clerkUserId: userId,
+		},
+	});
+	if (!user) {
+		throw new Error("User not found");
+	}
+
+	const issue = await db.issue.findUnique({
+		where: {
+			id: issueId,
+		},
+		include: {
+			project: true,
+		},
+	});
+
+	if (!issue) {
+		throw new Error("Issue not found");
+	}
+
+	if (
+		issue.reporterId !== user.id &&
+		!issue.project.adminIds.includes(user.id)
+	) {
+		throw new Error("You dont have permissions to delete this issue.");
+	}
+
+	await db.issue.delete({
+		where: {
+			id: issueId,
+		},
+	});
+
+	return { success: true };
+}
+
+export async function updateIssue(issueId, data) {
+	const { userId, orgId } = auth();
+	if (!userId || !orgId) {
+		throw new Error("Unauthorized");
+	}
+
+	const user = await db.user.findUnique({
+		where: {
+			clerkUserId: userId,
+		},
+	});
+	if (!user) {
+		throw new Error("User not found");
+	}
+
+	const issue = await db.issue.findUnique({
+		where: {
+			id: issueId,
+		},
+		include: {
+			project: true,
+		},
+	});
+
+	if (!issue) {
+		throw new Error("Issue not found");
+	}
+
+	if (
+		issue.reporterId !== user.id &&
+		!issue.project.adminIds.includes(user.id)
+	) {
+		throw new Error("You dont have permissions to update this issue.");
+	}
+
+	try {
+		const updatedIssue = await db.issue.update({
+			where: {
+				id: issueId,
+			},
+			data: {
+				status: data.status,
+				priority: data.priority,
+			},
+			include: {
+				assignee: true,
+				reporter: true,
+			},
+		});
+
+		return updatedIssue;
+	} catch (error) {
+		throw new Error("Something went wrong : ", error);
+	}
+}

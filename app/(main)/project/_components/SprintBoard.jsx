@@ -12,6 +12,7 @@ import { getIssuesForSprint, updateIssuesOrder } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "./IssueCard";
 import { toast } from "sonner";
+import BoardFilters from "./BoardFilters";
 
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
@@ -45,11 +46,14 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 		if (currentSprint.id) {
 			fetchIssues(currentSprint.id);
 			setFilteredIssues(issues);
-			console.log(issues, filteredIssues);
 		}
 	}, [currentSprint.id]);
 
 	const [filteredIssues, setFilteredIssues] = useState(issues);
+
+	const handleFilterChange = (newFilteredIssues) => {
+		setFilteredIssues(newFilteredIssues);
+	};
 
 	const handleIssueCreated = () => {
 		fetchIssues(currentSprint.id);
@@ -127,6 +131,13 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 				projectId={projectId}
 			/>
 
+			{issues && !issuesLoading && (
+				<BoardFilters
+					issues={issues}
+					onFilterChange={handleFilterChange}
+				/>
+			)}
+
 			{updatedIssuesError && (
 				<p className="text-red-500 mt-2">
 					{updatedIssuesError.message}
@@ -156,7 +167,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 											</h3>
 
 											{/* Issues */}
-											{issues
+											{filteredIssues
 												?.filter(
 													(issue) =>
 														issue.status ===
@@ -170,6 +181,9 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 																issue.id
 															}
 															index={index}
+															isDragDisabled={
+																updatedIssuesLoading
+															}
 														>
 															{(provided) => {
 																return (
@@ -183,6 +197,29 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 																		<IssueCard
 																			issue={
 																				issue
+																			}
+																			onDelete={() =>
+																				fetchIssues(
+																					currentSprint.id
+																				)
+																			}
+																			onUpdate={(
+																				updated
+																			) =>
+																				setIssues(
+																					(
+																						issues
+																					) =>
+																						issues.map(
+																							(
+																								issue
+																							) =>
+																								issue.id ===
+																								updated.id
+																									? updated
+																									: issue
+																						)
+																				)
 																			}
 																		/>
 																	</div>
