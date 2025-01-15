@@ -176,7 +176,7 @@ const IssueDetailsDialog = ({
 					{canChange && (
 						<Button
 							onClick={handleDelete}
-							variant="distructive"
+							variant="destructive"
 							disabled={deleteLoading}
 						>
 							{deleteLoading ? "Deleting..." : "Delete Issue"}

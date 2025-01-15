@@ -15,6 +15,7 @@ import React from "react";
 import { useState } from "react";
 import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 	const [status, setStatus] = useState(sprint.status);
@@ -22,6 +23,9 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 	const startDate = new Date(sprint.startDate);
 	const endDate = new Date(sprint.endDate);
 	const now = new Date();
+
+	const searchParams = useSearchParams();
+	const router = useRouter();
 
 	const canStart =
 		isBefore(now, endDate) &&
@@ -51,10 +55,22 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 		}
 	}, [updatedStatus, loading]);
 
+	useEffect(() => {
+		const sprintId = searchParams.get("sprint");
+		if (sprintId && sprintId !== sprint.id) {
+			const selectedSprint = sprints.find((s) => s.id === sprintId);
+			if (selectedSprint) {
+				setSprint(selectedSprint);
+				setStatus(selectedSprint.status);
+			}
+		}
+	}, [searchParams, sprints]);
+
 	const handleSprintChange = (value) => {
 		const selectedSprint = sprints.find((s) => s.id === value);
 		setSprint(selectedSprint);
 		setStatus(selectedSprint.status);
+		router.replace(`/project/${projectId}`, undefined, { shallow: true });
 	};
 
 	const getStatusText = () => {
