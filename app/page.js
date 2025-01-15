@@ -13,7 +13,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const page = () => {
+const Page = () => {
 	const features = [
 		{
 			title: "Intuitive Kanban Boards",
@@ -148,4 +148,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;

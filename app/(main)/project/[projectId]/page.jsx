@@ -4,7 +4,7 @@ import React from "react";
 import SprintCreationBoard from "../_components/SprintCreationBoard";
 import SprintBoard from "../_components/SprintBoard";
 
-const page = async ({ params }) => {
+const Page = async ({ params }) => {
 	const { projectId } = params;
 	const project = await getProject(projectId);
 	if (!project) {
@@ -35,4 +35,4 @@ const page = async ({ params }) => {
 	);
 };
 
-export default page;
+export default Page;

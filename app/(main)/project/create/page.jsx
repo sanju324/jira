@@ -13,7 +13,7 @@ import { CreateProject } from "@/actions/projects";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const page = () => {
+const Page = () => {
 	const { isLoaded: isOrgLoaded, membership } = useOrganization();
 	const { isLoaded: isUserLoaded } = useUser();
 	const [isAdmin, setIsAdmin] = useState(false);
@@ -33,10 +33,6 @@ const page = () => {
 		}
 	}, [isOrgLoaded, isUserLoaded, membership]);
 
-	if (!isOrgLoaded || !isUserLoaded) {
-		return null;
-	}
-
 	const {
 		data: project,
 		loading,
@@ -53,6 +49,10 @@ const page = () => {
 			router.push(`/project/${project.id}`);
 		}
 	}, [loading]);
+
+	if (!isOrgLoaded || !isUserLoaded) {
+		return null;
+	}
 
 	if (!isAdmin) {
 		return (
@@ -131,4 +131,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;

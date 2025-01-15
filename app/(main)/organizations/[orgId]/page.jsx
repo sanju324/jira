@@ -5,7 +5,7 @@ import UserIssues from "./_components/UserIssues";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-const page = async ({ params }) => {
+const Page = async ({ params }) => {
 	const { orgId } = await params;
 	const organisation = await getOrganisation(orgId);
 	const { userId } = auth();
@@ -37,4 +37,4 @@ const page = async ({ params }) => {
 	);
 };
 
-export default page;
+export default Page;
