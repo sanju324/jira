@@ -102,7 +102,17 @@ This project can be deployed to platforms like Vercel or Netlify. Make sure to c
 
 ## Screenshots
 
-_Include screenshots of the application here to visually demonstrate its functionality._
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-27-37.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-31-56.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-32-11.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-32-29.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-32-38.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-33-17.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-33-25.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-34-20.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-34-28.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-34-34.png>)
+![ScreenShot](<public/screenshots/Screenshot from 2025-01-16 07-35-00.png>)
 
 ## Learnings and Skills Demonstrated
 
