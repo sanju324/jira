@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jira Clone Project
+
+This project is a full-stack Jira clone built using modern web development tools and libraries. It is designed to showcase a highly functional, visually appealing, and scalable application that can be added to your portfolio to impress recruiters and demonstrate your skillset.
+
+## Project Overview
+
+**YouTube Tutorial:** [Full Stack React JS Project (Jira Clone) - Next JS, Shadcn UI, Tailwind, Clerk, NeonDB Tutorial 🔥](https://www.youtube.com/watch?v=R5dBYINNouY)
+
+### Features
+
+-   **Authentication:** User authentication and management using Clerk.
+-   **Database:** Backend powered by NeonDB with Prisma as the ORM.
+-   **UI Library:** Built with Shadcn UI components.
+-   **Styling:** Tailwind CSS for rapid and responsive design.
+-   **Frontend Framework:** React and Next.js for a seamless user experience.
+-   **Full Stack Capabilities:** A complete implementation of a project management system inspired by Jira.
+
+## Tech Stack
+
+### Frontend
+
+-   **React.js**: Component-based library for building user interfaces.
+-   **Next.js**: Framework for server-rendered React applications.
+-   **Tailwind CSS**: Utility-first CSS framework.
+-   **Shadcn UI**: For customizable and accessible UI components.
+
+### Backend
+
+-   **NeonDB**: Serverless Postgres database for data persistence.
+-   **Prisma**: ORM for database access and schema management.
+-   **Clerk**: Authentication and user management.
+
+## Project Structure
+
+```
+|-- prisma/           # Prisma schema and migrations
+|-- public/           # Static assets
+|-- src/
+    |-- components/   # Reusable UI components
+    |-- hooks/        # Custom React hooks
+    |-- pages/        # Next.js pages
+    |-- styles/       # Tailwind CSS configuration
+    |-- utils/        # Utility functions
+    |-- app/          # Application-specific logic
+```
+
+## Prerequisites
+
+1. Node.js installed on your system.
+2. A NeonDB instance.
+3. Clerk account for authentication.
+4. Basic knowledge of React, Next.js, and Tailwind CSS.
 
 ## Getting Started
 
-First, run the development server:
+### Clone the Repository
+
+```bash
+git clone <repository_url>
+cd jira-clone
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Set Up Environment Variables
+
+Create a `.env` file in the root directory and add the following variables:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=get-this-from-clerk
+CLERK_SECRET_KEY=get-this-from-clerk
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
+
+DATABASE_URL=your-neon-db-url
+```
+
+### Run Database Migrations
+
+```bash
+npx prisma migrate dev
+```
+
+### Start the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Access the application at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project can be deployed to platforms like Vercel or Netlify. Make sure to configure environment variables in the deployment platform.
 
-## Learn More
+## Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+_Include screenshots of the application here to visually demonstrate its functionality._
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Learnings and Skills Demonstrated
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+-   Implemented a full-stack web application using modern frameworks and tools.
+-   Designed and managed a responsive UI using Tailwind CSS.
+-   Configured and interacted with a serverless database (NeonDB).
+-   Set up authentication and user management using Clerk.
+-   Learned best practices for structuring and deploying a Next.js application.
 
-## Deploy on Vercel
+## Acknowledgments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Thanks to the creator of the [YouTube tutorial](https://www.youtube.com/watch?v=R5dBYINNouY) for guiding this project.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the MIT License. Feel free to use, modify, and distribute this project as per the terms of the license.
+
+---
+
+Happy Coding!
