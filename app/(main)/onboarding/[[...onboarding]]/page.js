@@ -17,8 +17,8 @@ const Page = () => {
 		<div className="flex justify-center items-center pt-14">
 			<OrganizationList
 				hidePersonal
-				afterCreateOrganizationUrl={"/organization/:slug"}
-				afterSelectOrganizationUrl={"/organization/:slug"}
+				afterCreateOrganizationUrl={"/organizations/:slug"}
+				afterSelectOrganizationUrl={"/organizations/:slug"}
 			/>
 		</div>
 	);

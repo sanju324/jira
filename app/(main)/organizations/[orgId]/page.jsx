@@ -19,18 +19,18 @@ const Page = async ({ params }) => {
 	}
 
 	return (
-		<div className="container mx-auto px-4">
+		<div className="container mx-auto px-4 bg-white text-gray-900">
 			<div className="mb-4 flex flex-col sm:flex-row justify-between items-start">
-				<h1 className="text-5xl font-bold gradient-title pb-2">
+				<h1 className="text-5xl font-bold light-gradient-title pb-2">
 					{organisation.name}&rsquo;s Projects
 				</h1>
 				{/* org switcher */}
 				<OrgSwitcher />
 			</div>
-			<div classname="mb-4">
+			<div className="mb-4">
 				<ProjectList orgId={organisation.id} />
 			</div>
-			<div classname="mt-8">
+			<div className="mt-8">
 				<UserIssues userId={userId} />
 			</div>
 		</div>

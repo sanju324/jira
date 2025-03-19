@@ -32,7 +32,7 @@ export async function CreateProject(data) {
 			},
 		});
 
-		return project;
+		return JSON.parse(JSON.stringify(project));
 	} catch (error) {
 		throw new Error("Failed to create project" + error.message);
 	}
@@ -67,7 +67,7 @@ export async function GetProjects(orgId) {
 		},
 	});
 
-	return projects;
+	return JSON.parse(JSON.stringify(projects));
 }
 
 export async function deleteProject(projectId) {
@@ -147,5 +147,5 @@ export async function getProject(projectId) {
 		return null;
 	}
 
-	return project;
+	return JSON.parse(JSON.stringify(project));
 }

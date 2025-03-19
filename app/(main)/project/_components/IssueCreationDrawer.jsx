@@ -98,9 +98,9 @@ const IssueCreationDrawer = ({
 
 	return (
 		<Drawer open={isOpen} onClose={onClose}>
-			<DrawerContent>
+			<DrawerContent className="bg-white text-black">
 				<DrawerHeader>
-					<DrawerTitle>Create New Issue</DrawerTitle>
+					<DrawerTitle className="text-xl font-bold">Create New Issue</DrawerTitle>
 				</DrawerHeader>
 				{usersLoading && <BarLoader width={"100%"} color="#36d7b7" />}
 				<form
@@ -114,7 +114,7 @@ const IssueCreationDrawer = ({
 						>
 							Title
 						</label>
-						<Input id="title" {...register("title")} />
+						<Input id="title" {...register("title")} className="border-gray-300" />
 						{errors.title && (
 							<p className="text-red-500 text-sm mt-1">
 								{errors.title.message}
@@ -136,7 +136,7 @@ const IssueCreationDrawer = ({
 									onValueChange={field.onChange}
 									defaultValue={field.value}
 								>
-									<SelectTrigger>
+									<SelectTrigger className="border-gray-300">
 										<SelectValue placeholder="Select assignee" />
 									</SelectTrigger>
 									<SelectContent>
@@ -173,6 +173,7 @@ const IssueCreationDrawer = ({
 								<MDEditor
 									value={field.value}
 									onChange={field.onChange}
+									className="border-gray-300"
 								/>
 							)}
 						/>
@@ -192,7 +193,7 @@ const IssueCreationDrawer = ({
 									onValueChange={field.onChange}
 									defaultValue={field.value}
 								>
-									<SelectTrigger className="w-[180px]">
+									<SelectTrigger className="w-[180px] border-gray-300">
 										<SelectValue placeholder="Select Priority" />
 									</SelectTrigger>
 									<SelectContent>
@@ -217,7 +218,7 @@ const IssueCreationDrawer = ({
 					<Button
 						type="submit"
 						disabled={createIssueLoading}
-						className="w-full"
+						className="w-full bg-blue-500 text-white hover:bg-blue-600"
 					>
 						{createIssueLoading ? "Creating..." : "Create Issue"}
 					</Button>

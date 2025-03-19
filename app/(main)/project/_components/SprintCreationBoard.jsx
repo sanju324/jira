@@ -67,19 +67,19 @@ const SprintCreationBoard = ({
 	return (
 		<div>
 			<div className="flex justify-between">
-				<h1 className="text-5xl font-bold mb-8 gradient-title">
+				<h1 className="text-5xl font-bold mb-8 light-gradient-title">
 					{projectTitle}
 				</h1>
 				<Button
 					onClick={() => setShowForm(!showForm)}
-					className="mt-2"
+					className={`mt-2 ${showForm ? "bg-red-200" : "bg-blue-500"}`}
 					variant={showForm ? "destructive" : "default"}
 				>
 					{showForm ? "Cancel" : "Create Sprint"}
 				</Button>
 			</div>
 			{showForm && (
-				<Card className="pt-4 mb-4">
+				<Card className="pt-4 mb-4 bg-white shadow-lg">
 					<CardContent>
 						<form
 							className="flex gap-4 items-end"
@@ -88,14 +88,14 @@ const SprintCreationBoard = ({
 							<div>
 								<label
 									htmlFor="name"
-									className="block text-sm font-medium mb-1"
+									className="block text-sm font-medium mb-1 text-gray-700"
 								>
 									Sprint Name
 								</label>
 								<Input
 									id="name"
 									readOnly
-									className="bg-slate-950"
+									className="bg-gray-100"
 									{...register("name")}
 								/>
 								{errors.name && (
@@ -105,7 +105,7 @@ const SprintCreationBoard = ({
 								)}
 							</div>
 							<div className="flex-1">
-								<label className="block text-sm font-medium mb-1">
+								<label className="block text-sm font-medium mb-1 text-gray-700">
 									Sprint Duration
 								</label>
 								<Controller
@@ -115,7 +115,7 @@ const SprintCreationBoard = ({
 										<Popover>
 											<PopoverTrigger asChild>
 												<Button
-													className={`w-full justify-start text-left font-normal bg-slate-950 ${
+													className={`w-full justify-start text-left font-normal bg-gray-100 ${
 														!dateRange &&
 														"text-muted-foreground"
 													}`}
@@ -139,7 +139,7 @@ const SprintCreationBoard = ({
 												</Button>
 											</PopoverTrigger>
 											<PopoverContent
-												className="w-auto bg-slate-900"
+												className="w-auto bg-white shadow-lg"
 												align="start"
 											>
 												<DayPicker
@@ -178,6 +178,7 @@ const SprintCreationBoard = ({
 							<Button
 								type="submit"
 								disabled={createSprintLoading}
+								className="bg-green-500"
 							>
 								{createSprintLoading
 									? "Creating..."

@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
-import { shadesOfPurple } from "@clerk/themes";
+import { experimental__simple } from "@clerk/themes";
 import Header from "@/components/header";
 import { Toaster } from "sonner";
 
@@ -26,27 +26,27 @@ export default function RootLayout({ children }) {
 	return (
 		<ClerkProvider
 			appearance={{
-				baseTheme: shadesOfPurple,
+				baseTheme: experimental__simple, // Change to light theme
 				variables: {},
 				elements: {},
 			}}
 		>
 			<html lang="en">
 				<body
-					className={`${geistSans.variable} ${geistMono.variable} antialiased dotted-background`}
+					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="dark"
+						defaultTheme="light"
 						enableSystem
 						disableTransitionOnChange
 					>
 						<Header />
 						<main className="min-h-screen">{children}</main>
 						<Toaster richColors />
-						<footer className="bg-gray-900 py-12">
+						<footer className="bg-gray-100 py-12">
 							<div className="container mx-auto px-4 text-center">
-								<p>Made with &hearts; By MishraTanishq</p>
+								<p className="text-gray-800">Made with &hearts; By MishraTanishq</p>
 							</div>
 						</footer>
 					</ThemeProvider>
