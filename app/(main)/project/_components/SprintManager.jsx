@@ -90,7 +90,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 		<>
 			<div className="flex justify-between items-center gap-4">
 				<Select value={sprint.id} onValueChange={handleSprintChange}>
-					<SelectTrigger className="bg-slate-950 self-start">
+					<SelectTrigger className="bg-gray-200 text-gray-900 self-start">
 						<SelectValue placeholder="Select Sprint" />
 					</SelectTrigger>
 					<SelectContent>
@@ -106,7 +106,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 
 				{canStart && (
 					<Button
-						className="bg-green-900 text-white"
+						className="bg-green-500 text-white"
 						onClick={() => handleStatusChange("ACTIVE")}
 						disabled={loading}
 					>
@@ -116,6 +116,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 				{canEnd && (
 					<Button
 						variant="destructive"
+						className="bg-red-500 text-white"
 						onClick={() => handleStatusChange("COMPLETED")}
 						disabled={loading}
 					>
@@ -129,7 +130,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
 			)}
 
 			{getStatusText() && (
-				<Badge className="mt-3 ml-1 self-start">
+				<Badge className="mt-3 ml-1 self-start bg-blue-100 text-blue-800">
 					{getStatusText()}
 				</Badge>
 			)}

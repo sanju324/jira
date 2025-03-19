@@ -43,7 +43,7 @@ export async function createIssue(projectId, data) {
 			reporter: true,
 		},
 	});
-	return issue;
+	return JSON.parse(JSON.stringify(issue));
 }
 
 export async function getIssuesForSprint(sprintId) {
@@ -66,7 +66,7 @@ export async function getIssuesForSprint(sprintId) {
 			},
 		],
 	});
-	return issues;
+	return JSON.parse(JSON.stringify(issues));
 }
 
 export async function updateIssuesOrder(updatedIssues) {
@@ -186,13 +186,14 @@ export async function updateIssue(issueId, data) {
 			},
 		});
 
-		return updatedIssue;
+		return JSON.parse(JSON.stringify(updatedIssue));
 	} catch (error) {
 		throw new Error("Something went wrong : ", error);
 	}
 }
 
 export async function getUserIssues(userId) {
+	/* @next-codemod-ignore */
 	const { orgId } = auth();
 	if (!userId || !orgId) {
 		throw new Error("Unauthorized");
@@ -227,5 +228,5 @@ export async function getUserIssues(userId) {
 		orderBy: { updatedAt: "desc" },
 	});
 
-	return issues;
+	return JSON.parse(JSON.stringify(issues));
 }

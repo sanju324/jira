@@ -55,80 +55,80 @@ const Page = () => {
 	}
 
 	if (!isAdmin) {
-		return (
-			<div className="flex flex-col gap-2 items-center">
-				<span className="text-2xl gradient-title">
-					Oops! Only admins can create projects
-				</span>
-				<OrgSwitcher />
-			</div>
-		);
-	}
+        return (
+            <div className="flex flex-col gap-2 items-center">
+                <span className="text-2xl light-gradient-title">
+                    Oops! Only admins can create projects
+                </span>
+                <OrgSwitcher />
+            </div>
+        );
+    }
 
-	return (
-		<div className="container mx-auto py-10">
-			<h1 className="text-6xl text-center font-bold mb-8 gradient-title">
-				Create Project
-			</h1>
-			<form
-				className="flex flex-col space-y-4"
-				onSubmit={handleSubmit(onSubmit)}
-			>
-				<div>
-					<Input
-						id="name"
-						className="bg-slate-950"
-						placeholder="Project Name"
-						{...register("name")}
-					/>
-					{errors.name && (
-						<span className="text-red-500 text-sm mt-1">
-							{errors.name.message}
-						</span>
-					)}
-				</div>
-				<div>
-					<Input
-						id="key"
-						className="bg-slate-950"
-						placeholder="Project Key"
-						{...register("key")}
-					/>
-					{errors.key && (
-						<span className="text-red-500 text-sm mt-1">
-							{errors.key.message}
-						</span>
-					)}
-				</div>
-				<div>
-					<Textarea
-						id="description"
-						className="bg-slate-950 h-28"
-						placeholder="Project Description"
-						{...register("description")}
-					/>
-					{errors.description && (
-						<span className="text-red-500 text-sm mt-1">
-							{errors.description.message}
-						</span>
-					)}
-				</div>
-				<div>
-					<Button
-						disabled={loading}
-						type="submit"
-						size="lg"
-						className="bg-blue-500 text-white"
-					>
-						{loading ? "Creating..." : "Create Project"}
-					</Button>
-					{error && (
-						<p className="text-red-500 mt-2">{error.message}</p>
-					)}
-				</div>
-			</form>
-		</div>
-	);
+    return (
+        <div className="container mx-auto py-10">
+            <h1 className="text-6xl text-center font-bold mb-8 light-gradient-title">
+                Create Project
+            </h1>
+            <form
+                className="flex flex-col space-y-4"
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <div>
+                    <Input
+                        id="name"
+                        className="bg-white text-black"
+                        placeholder="Project Name"
+                        {...register("name")}
+                    />
+                    {errors.name && (
+                        <span className="text-red-500 text-sm mt-1">
+                            {errors.name.message}
+                        </span>
+                    )}
+                </div>
+                <div>
+                    <Input
+                        id="key"
+                        className="bg-white text-black"
+                        placeholder="Project Key"
+                        {...register("key")}
+                    />
+                    {errors.key && (
+                        <span className="text-red-500 text-sm mt-1">
+                            {errors.key.message}
+                        </span>
+                    )}
+                </div>
+                <div>
+                    <Textarea
+                        id="description"
+                        className="bg-white text-black h-28"
+                        placeholder="Project Description"
+                        {...register("description")}
+                    />
+                    {errors.description && (
+                        <span className="text-red-500 text-sm mt-1">
+                            {errors.description.message}
+                        </span>
+                    )}
+                </div>
+                <div>
+                    <Button
+                        disabled={loading}
+                        type="submit"
+                        size="lg"
+                        className="bg-blue-500 text-white"
+                    >
+                        {loading ? "Creating..." : "Create Project"}
+                    </Button>
+                    {error && (
+                        <p className="text-red-500 mt-2">{error.message}</p>
+                    )}
+                </div>
+            </form>
+        </div>
+    );
 };
 
 export default Page;

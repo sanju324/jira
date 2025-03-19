@@ -59,7 +59,7 @@ const BoardFilters = ({ issues, onFilterChange }) => {
 		<div className="space-y-4">
 			<div className="flex flex-col pr-2 sm:flex-row gap-4 sm:gap-6 mt-6">
 				<Input
-					className="w-full sm:w-72"
+					className="w-full sm:w-72 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
 					placeHolder="Search Issues..."
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
@@ -77,8 +77,8 @@ const BoardFilters = ({ issues, onFilterChange }) => {
 									className={`rounded-full ring ${
 										selected
 											? "ring-blue-600"
-											: "ring-black"
-									} ${i > 0 ? "-ml-6" : ""}`}
+											: "ring-gray-300"
+									} ${i > 0 ? "-ml-6" : ""} cursor-pointer`}
 									style={{ zIndex: i }}
 									onClick={() => toggleAssignee(assignee.id)}
 								>
@@ -98,7 +98,7 @@ const BoardFilters = ({ issues, onFilterChange }) => {
 					value={selectedPriority}
 					onValueChange={setSelectedPriority}
 				>
-					<SelectTrigger className="w-full sm:w-52">
+					<SelectTrigger className="w-full sm:w-52 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
 						<SelectValue placeholder="Selected Priority" />
 					</SelectTrigger>
 					<SelectContent>
@@ -114,7 +114,7 @@ const BoardFilters = ({ issues, onFilterChange }) => {
 					<Button
 						variant="ghost"
 						onClick={clearFilters}
-						className="flex items-center"
+						className="flex items-center text-gray-600 hover:text-gray-800"
 					>
 						<X className="mr-2 h-4 w-4" />
 						Clear Filters
