@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
 						<Toaster richColors />
 						<footer className="bg-gray-100 py-12">
 							<div className="container mx-auto px-4 text-center">
-								<p className="text-gray-800">Made with &hearts; By MishraTanishq</p>
+								<p className="text-gray-800">Made with &hearts; By Sanjib Deka</p>
 							</div>
 						</footer>
 					</ThemeProvider>
